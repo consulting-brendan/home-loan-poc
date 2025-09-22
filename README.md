@@ -14,7 +14,7 @@ The solution implements two main user stories using fflib architecture:
 
 **[▶️ Watch Story A Demo](https://www.loom.com/share/dc76320baf9944f9830bc83319938feb?sid=8e28daeb-e900-4fef-9235-734dc90a7bc2)**
 
-See the complete loan application submission workflow in action - from creating contacts and products to automatic approval and task assignment.
+See the loan application submission workflow in action - from creating Loan Application, linking product and contacts to automatic approval and task assignment.
 
 ### Process Flow
 ```
