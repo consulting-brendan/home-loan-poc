@@ -33,6 +33,15 @@ sf apex get test -i <TEST_RUN_ID> -o consulting.brendan@gmail.com
 sf apex run test -t LoanApplicationsTest -o consulting.brendan@gmail.com
 sf apex run test -t LoanApplicationsUnitTest -o consulting.brendan@gmail.com
 ```
+### Test Results
+
+LoanApplicationsTest
+
+<img width="521" height="496" alt="image" src="https://github.com/user-attachments/assets/070672da-7262-43d4-ba5d-70fef546cc8e" />
+
+LoanApplicationsUnitTest
+
+<img width="494" height="376" alt="image" src="https://github.com/user-attachments/assets/ff3780de-b6bb-462d-bd1d-234ef9f12341" />
 
 ### Design Notes & Trade-offs
 
