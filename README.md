@@ -1,18 +1,52 @@
-# Salesforce DX Project: Next Steps
+# Mortgage Application System
 
-Now that you’ve created a Salesforce DX project, what’s next? Here are some documentation resources to get you started.
+A Salesforce proof-of-concept implementing a simplified mortgage application process using Apex Enterprise Patterns (fflib).
 
-## How Do You Plan to Deploy Your Changes?
+## Project Structure
 
-Do you want to deploy a set of changes, or create a self-contained application? Choose a [development model](https://developer.salesforce.com/tools/vscode/en/user-guide/development-models).
+The solution implements two main user stories using fflib architecture:
+- **Story A**: Submit Application (validation, product selection, task creation)
+- **Story B**: Product Rate Normalization (async background processing)
 
-## Configure Your Salesforce DX Project
+## Story A: Submit Application
 
-The `sfdx-project.json` file contains useful configuration information for your project. See [Salesforce DX Project Configuration](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_ws_config.htm) in the _Salesforce DX Developer Guide_ for details about this file.
+### Process Flow
+```
+Broker → Create Contact → Create Product → Create Loan Application → Update Status (Draft→Submitted) → System Validation → Product Selection → Task Assignment
+```
 
-## Read All About It
+### How to Run Tests
+```bash
+# Run all Story A tests
+sf apex run test -t LoanApplicationsTest,LoanApplicationsUnitTest -o consulting.brendan@gmail.com
 
-- [Salesforce Extensions Documentation](https://developer.salesforce.com/tools/vscode/)
-- [Salesforce CLI Setup Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_intro.htm)
-- [Salesforce DX Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_intro.htm)
-- [Salesforce CLI Command Reference](https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_reference.meta/sfdx_cli_reference/cli_reference.htm)
+# Get detailed test results (use the test run ID from above command)
+sf apex get test -i <TEST_RUN_ID> -o consulting.brendan@gmail.com
+
+# Alternative: Run specific test classes
+sf apex run test -t LoanApplicationsTest -o consulting.brendan@gmail.com
+sf apex run test -t LoanApplicationsUnitTest -o consulting.brendan@gmail.com
+```
+
+### Design Notes & Trade-offs
+
+**Architecture Decisions:**
+- **Domain Layer**: `LoanApplications` handles business logic for validation, product selection, and approval workflow
+- **Selector Layer**: `LoanApplicationsSelector`, `ContactsSelector`, `ProductsSelector` for data access
+- **Service Layer**: Orchestrates complex operations and external integrations
+- **Trigger Handler**: Thin trigger delegates to domain layer
+
+**Design Trade-offs:**
+- **Data Model**: Mostly followed guidelines standard Contact instead of Borrower, Loan_Application__c and Product__c and Broker is assumed user. In real solution if possible I would have used Web-to-Lead, Lead (Draft)->Opportunity (Submitted, Approved, Rejected), Contacts for borrower and broker and Product2
+- **Validation Strategy**: Implemented comprehensive validation in domain layer rather than using validation rules for quicker deployment and testing results 
+- **Task Assignment**: Created tasks for "broker" role generically.
+- **Error Handling**: Used simple field-level error messages. 
+- **Missed Service Classes**: Used only domain layer logic, due to first time using FFLIB unsure of what logic sits at domain and what sits at service. 
+
+## Story B: Product Rate Normalization
+
+### How to Run Tests
+
+
+
+
