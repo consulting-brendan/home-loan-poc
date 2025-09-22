@@ -6,7 +6,7 @@ A Salesforce proof-of-concept implementing a simplified mortgage application pro
 
 The solution implements two main user stories using fflib architecture:
 - **Story A**: Submit Application (validation, product selection, task creation)
-- **Story B**: Product Rate Normalization (async background processing)
+- **Story B**: Product Rate Normalization (async background processing) [IN PROGRESS]
 
 ## Story A: Submit Application
 
