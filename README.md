@@ -48,7 +48,7 @@ LoanApplicationsUnitTest
 **Architecture Decisions:**
 - **Domain Layer**: `LoanApplications` handles business logic for validation, product selection, and approval workflow
 - **Selector Layer**: `LoanApplicationsSelector`, `ContactsSelector`, `ProductsSelector` for data access
-- **Service Layer**: Orchestrates complex operations and external integrations
+- **Service Layer**: Not currently using a service layer, due to logic being quite basic all hanled in domain layer
 - **Trigger Handler**: Thin trigger delegates to domain layer
 
 **Design Trade-offs:**
