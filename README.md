@@ -54,7 +54,7 @@ sf apex test run \
 
 ## Testing Demo
 
-**[▶️ Watch Story A Demo](https://www.loom.com/share/dc76320baf9944f9830bc83319938feb?sid=8e28daeb-e900-4fef-9235-734dc90a7bc2)**
+**[▶️ Watch Story B Demo]([https://www.loom.com/share/dc76320baf9944f9830bc83319938feb?sid=8e28daeb-e900-4fef-9235-734dc90a7bc2](https://www.loom.com/share/1f39f40e4990498095600afbb7f6cc13?sid=75d3f9c4-a401-465e-a12a-79cf7ce26313)**
 
 ### Process Flow
 ```
@@ -213,12 +213,3 @@ System.debug('Records normalized to upper bound: ' + normalizedToUpper);
 System.debug('Records unchanged: ' + unchanged);
 System.debug('Total records processed: ' + finalResults.size());
 ```
-
-### Expected Results
-
-After normalization, you should see:
-- **Too Low Rate** & **Way Too Low**: `0.5%` (normalized from lower values)
-- **Too High Rate** & **Way Too High**: `15%` (normalized from higher values)  
-- **Just Right Low**, **Just Right High**, **Normal Rate**: unchanged
-
-The batch job should only process the out-of-range records (4 out of 7 in this test), demonstrating efficient querying.
