@@ -41,16 +41,20 @@ sf apex test run \
 - **Domain Layer**: `LoanApplicationDomain` — validation, approval, rejection rules  
 - **Service Layer**: `LoanApplicationService` — orchestrates selectors, domain decisions, and DML  
 - **Selector Layer**: `ContactsSelector`, `ProductsSelector`, `LoanApplicationsSelector` — data access  
-- **Trigger**: Thin trigger delegates work to service layer  
+- **Trigger**: Thin trigger delegates work to service layer 
 
 **Design Trade-offs:**
 - **Data Model**: Mostly followed guidelines standard Contact instead of Borrower, Loan_Application__c and Product__c and Broker is assumed user. In real solution if possible I would have used Web-to-Lead, Lead (Draft)->Opportunity (Submitted, Approved, Rejected), Contacts for borrower and broker and Product2
-- **Validation Strategy**: Implemented comprehensive validation in domain layer rather than using validation rules for quicker deployment and testing results 
-- **Task Assignment**: Created tasks for "broker" role generically.
-- **Error Handling**: Used simple field-level error messages. 
-- **Missed Service Classes**: Used only domain layer logic, due to first time using FFLIB unsure of what logic sits at domain and what sits at service. 
+- **Validation Strategy**: Will need more time to work out if I have validated based on FFLib best practice 
+- **Task Assignment**: Created tasks for "broker" role generically, with more time would have created Custom Metadata setup for various tasks assigned to various teams
+- **Testing**: Some tests coverage are quite low, I would have worked on expanding this given time
+- **Trigger Logic**: Usually I would have a handler as well to contain the run logic, not entirely sure how this works with FFLib yet 
 
 ## Story B: Product Rate Normalization
+
+## Testing Demo
+
+**[▶️ Watch Story A Demo](https://www.loom.com/share/dc76320baf9944f9830bc83319938feb?sid=8e28daeb-e900-4fef-9235-734dc90a7bc2)**
 
 ### Process Flow
 ```
@@ -88,11 +92,6 @@ sf apex test run \
 - **Selective Querying**: Selector only retrieves products outside bounds rather than all products
 - **Domain Efficiency**: Returns only modified records to minimize DML operations
 - **Batch Size**: Default 200 records per batch for optimal performance vs. memory usage
-
-**Error Handling Strategy:**
-- **Null Safety**: Domain logic handles null Base_Rate__c values gracefully
-- **Batch Resilience**: Each batch processes independently, failures don't affect other batches
-- **Governor Limits**: Respects all Salesforce limits through proper batching
 
 ### Manual Testing Scripts
 
