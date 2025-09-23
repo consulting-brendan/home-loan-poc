@@ -28,13 +28,7 @@ sfdx force:apex:test:run --resultformat human --codecoverage --synchronous
 ```
 ### Test Results
 
-LoanApplicationsTest
-
-<img width="521" height="496" alt="image" src="https://github.com/user-attachments/assets/070672da-7262-43d4-ba5d-70fef546cc8e" />
-
-LoanApplicationsUnitTest
-
-<img width="494" height="376" alt="image" src="https://github.com/user-attachments/assets/ff3780de-b6bb-462d-bd1d-234ef9f12341" />
+<img width="544" height="612" alt="image" src="https://github.com/user-attachments/assets/aafcd90a-3333-42a4-a6e7-605b79539081" />
 
 ### Design Notes & Trade-offs
 
