@@ -12,14 +12,14 @@ public with sharing class ProductsSelector extends fflib_SObjectSelector {
         };
     }
 
+    // Override to enforce ascending order by Base_Rate__c, then Min_Credit_Score__c
+    public override String getOrderBy() {
+        return 'Base_Rate__c ASC, Min_Credit_Score__c ASC';
+    }
+
     // Story A: return all products ordered by rate (lowest first)
     public List<Product__c> selectAllOrderByRateAsc() {
-        fflib_QueryFactory qf = newQueryFactory();
-        // Use addOrdering if available
-        qf.addOrdering(Product__c.Base_Rate__c, fflib_QueryFactory.SortOrder.ASCENDING);
-        qf.addOrdering(Product__c.Min_Credit_Score__c, fflib_QueryFactory.SortOrder.ASCENDING);
-        
-        return (List<Product__c>) Database.query(qf.toSOQL());
+        return (List<Product__c>) Database.query(newQueryFactory().toSOQL());
     }
 
     // Story B: only return products outside safe range
