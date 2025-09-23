@@ -24,14 +24,7 @@ Broker → Create Contact → Create Product → Create Loan Application → Upd
 ### How to Run Tests
 ```bash
 # Run all Story A tests
-sf apex run test -t LoanApplicationsTest,LoanApplicationsUnitTest -o consulting.brendan@gmail.com
-
-# Get detailed test results (use the test run ID from above command)
-sf apex get test -i <TEST_RUN_ID> -o consulting.brendan@gmail.com
-
-# Alternative: Run specific test classes
-sf apex run test -t LoanApplicationsTest -o consulting.brendan@gmail.com
-sf apex run test -t LoanApplicationsUnitTest -o consulting.brendan@gmail.com
+sfdx force:apex:test:run --resultformat human --codecoverage --synchronous
 ```
 ### Test Results
 
@@ -46,10 +39,10 @@ LoanApplicationsUnitTest
 ### Design Notes & Trade-offs
 
 **Architecture Decisions:**
-- **Domain Layer**: `LoanApplications` handles business logic for validation, product selection, and approval workflow
-- **Selector Layer**: `LoanApplicationsSelector`, `ContactsSelector`, `ProductsSelector` for data access
-- **Service Layer**: Not currently using a service layer, due to logic being quite basic all hanled in domain layer
-- **Trigger Handler**: Thin trigger delegates to domain layer
+- **Domain Layer**: `LoanApplications` — validation, approval, rejection rules  
+- **Service Layer**: `LoanApplicationService` — orchestrates selectors, domain decisions, and DML  
+- **Selector Layer**: `ContactsSelector`, `ProductsSelector`, `LoanApplicationsSelector` — data access  
+- **Trigger**: Thin trigger delegates work to service layer  
 
 **Design Trade-offs:**
 - **Data Model**: Mostly followed guidelines standard Contact instead of Borrower, Loan_Application__c and Product__c and Broker is assumed user. In real solution if possible I would have used Web-to-Lead, Lead (Draft)->Opportunity (Submitted, Approved, Rejected), Contacts for borrower and broker and Product2
