@@ -23,12 +23,16 @@ Broker → Create Contact → Create Product → Create Loan Application → Upd
 
 ### How to Run Tests
 ```bash
-# Run all Story A tests
-sfdx force:apex:test:run --resultformat human --codecoverage --synchronous
+# Run all Story A and B tests
+
+sf apex test run \  --classnames LoanApplicationServiceTest,LoanApplicationDomainTest,ProductsSelectorTest,ProductRateNormalizationBatchTest \
+  --result-format human \
+  --code-coverage \
+  --wait 10
 ```
 ### Test Results
 
-<img width="544" height="612" alt="image" src="https://github.com/user-attachments/assets/aafcd90a-3333-42a4-a6e7-605b79539081" />
+<img width="523" height="173" alt="image" src="https://github.com/user-attachments/assets/9cca7755-06be-4086-b491-c02bcf006f29" />
 
 ### Design Notes & Trade-offs
 
