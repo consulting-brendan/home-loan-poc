@@ -122,6 +122,13 @@ for(Product__c p : initial) {
 ```apex
 // TEST SERVICE LAYER
 System.debug('=== TESTING SERVICE LAYER ===');
+
+System.debug('Before service normalization:');
+List<Product__c> beforeService = [SELECT Name, Base_Rate__c FROM Product__c ORDER BY Base_Rate__c];
+for(Product__c p : beforeService) {
+    System.debug(p.Name + ': ' + (p.Base_Rate__c * 100) + '%');
+}
+
 ProductRateNormalizationService.normalizeProductRates();
 
 System.debug('After service normalization:');
@@ -129,7 +136,6 @@ List<Product__c> afterService = [SELECT Name, Base_Rate__c FROM Product__c ORDER
 for(Product__c p : afterService) {
     System.debug(p.Name + ': ' + (p.Base_Rate__c * 100) + '%');
 }
-```
 
 #### 4. Reset for Batch Test
 ```apex
