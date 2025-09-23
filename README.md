@@ -61,20 +61,6 @@ sf apex test run \
 Background Process → Query Out-of-Range Products → Apply Normalization Rules → Bulk Update → Complete
 ```
 
-### Architecture Implementation
-
-**Architecture Decisions:**
-- **Domain Layer**: `ProductsDomain` — rate normalization business logic (0.5% - 15% bounds)
-- **Service Layer**: `ProductRateNormalizationService` — orchestrates normalization process with constants
-- **Selector Layer**: `ProductsSelector` — efficient querying of products needing normalization
-- **Async Layer**: `ProductRateNormalizationBatch` — batchable implementation for background processing
-
-**Key Features:**
-- **Bulk-Safe Processing**: Queries and updates in batches, respects governor limits
-- **Efficient Querying**: Only selects products outside the safe range (0.5% - 15%)
-- **In-Memory Logic**: Domain layer normalizes rates without DML, returns only changed records
-- **Asynchronous Processing**: Batchable Apex handles large datasets in background
-
 ### How to Run Tests
 
 ```bash
@@ -86,12 +72,19 @@ sf apex test run \
   --wait 10
 ```
 
-### Design Trade-offs
+**Design Notes & Trade-offs**
 
-**Performance Optimizations:**
-- **Selective Querying**: Selector only retrieves products outside bounds rather than all products
-- **Domain Efficiency**: Returns only modified records to minimize DML operations
-- **Batch Size**: Default 200 records per batch for optimal performance vs. memory usage
+**Architecture Decisions:**
+* **Domain Layer**: `ProductsDomain` — rate normalization business logic (0.5% - 15% bounds)
+* **Service Layer**: `ProductRateNormalizationService` — orchestrates normalization process with constants
+* **Selector Layer**: `ProductsSelector` — efficient querying of products needing normalization
+* **Async Layer**: `ProductRateNormalizationBatch` — batchable implementation for background processing
+
+**Design Trade-offs:**
+* **Batch Strategy**: Chose Batchable over Queueable for large dataset processing, though Queueable chains might be more flexible for smaller volumes
+* **Error Handling**: Basic batch error handling, would implement more sophisticated logging and retry mechanisms with more time
+* **Constants Management**: Hard-coded rate bounds in service class, would move to Custom Metadata or Custom Settings in production
+* **Testing**: Focused on core functionality testing, would expand negative scenarios and governor limit edge cases given more time
 
 ### Manual Testing Scripts
 
