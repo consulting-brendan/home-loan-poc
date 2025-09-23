@@ -1,7 +1,10 @@
 public with sharing class ContactsSelector extends fflib_SObjectSelector {
-    
+    public Schema.SObjectType getSObjectType() { 
+        return Contact.SObjectType; 
+    }
+
     public List<Schema.SObjectField> getSObjectFieldList() {
-        return new List<Schema.SObjectField> {
+        return new List<Schema.SObjectField>{
             Contact.Id,
             Contact.Name,
             Contact.Email,
@@ -9,25 +12,11 @@ public with sharing class ContactsSelector extends fflib_SObjectSelector {
             Contact.Credit_Score__c
         };
     }
-    
-    public Schema.SObjectType getSObjectType() {
-        return Contact.sObjectType;
-    }
-    
-    public List<Contact> selectById(Set<Id> idSet) {
-        return (List<Contact>) selectSObjectsById(idSet);
-    }
-    
-    public List<Contact> selectByIdWithSecurity(Set<Id> idSet) {
-        return (List<Contact>) Database.query(
-            newQueryFactory()
-                .selectFields(getSObjectFieldList())
-                .setCondition('Id IN :idSet')
-                .toSOQL()
-        );
-    }
-    
-    public static ContactsSelector newInstance() {
-        return (ContactsSelector) Application.Selector.newInstance(Contact.SObjectType);
+
+    public Map<Id, Contact> selectByIds(Set<Id> contactIds) {
+        if (contactIds == null || contactIds.isEmpty()) return new Map<Id, Contact>();
+        return new Map<Id, Contact>((List<Contact>) Database.query(
+            newQueryFactory().setCondition('Id IN :contactIds').toSOQL()
+        ));
     }
 }
