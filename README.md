@@ -54,7 +54,7 @@ sf apex test run \
 
 ## Testing Demo
 
-**[▶️ Watch Story B Demo]([https://www.loom.com/share/dc76320baf9944f9830bc83319938feb?sid=8e28daeb-e900-4fef-9235-734dc90a7bc2](https://www.loom.com/share/1f39f40e4990498095600afbb7f6cc13?sid=75d3f9c4-a401-465e-a12a-79cf7ce26313)**
+**[▶️ Watch Story B Demo](https://www.loom.com/share/1f39f40e4990498095600afbb7f6cc13?sid=a83a5302-fc4d-48dd-ac56-3d9053f91068)**
 
 ### Process Flow
 ```
