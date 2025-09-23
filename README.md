@@ -136,6 +136,7 @@ List<Product__c> afterService = [SELECT Name, Base_Rate__c FROM Product__c ORDER
 for(Product__c p : afterService) {
     System.debug(p.Name + ': ' + (p.Base_Rate__c * 100) + '%');
 }
+```
 
 #### 4. Reset for Batch Test
 ```apex
@@ -211,46 +212,6 @@ System.debug('Records normalized to lower bound: ' + normalizedToLower);
 System.debug('Records normalized to upper bound: ' + normalizedToUpper);
 System.debug('Records unchanged: ' + unchanged);
 System.debug('Total records processed: ' + finalResults.size());
-```
-
-#### 7. Complete Test Script (All-in-One)
-```apex
-// COMPLETE STORY B TEST - Execute all steps except batch verification
-System.debug('=== STEP 1: CREATING TEST DATA ===');
-delete [SELECT Id FROM Product__c];
-
-List<Product__c> testProducts = new List<Product__c>{
-    new Product__c(Name = 'Too Low Rate', Base_Rate__c = 0.001, Min_Credit_Score__c = 600),
-    new Product__c(Name = 'Way Too Low', Base_Rate__c = 0.0001, Min_Credit_Score__c = 650),
-    new Product__c(Name = 'Too High Rate', Base_Rate__c = 0.18, Min_Credit_Score__c = 700),
-    new Product__c(Name = 'Way Too High', Base_Rate__c = 0.25, Min_Credit_Score__c = 750),
-    new Product__c(Name = 'Just Right Low', Base_Rate__c = 0.005, Min_Credit_Score__c = 580),
-    new Product__c(Name = 'Just Right High', Base_Rate__c = 0.15, Min_Credit_Score__c = 800),
-    new Product__c(Name = 'Normal Rate', Base_Rate__c = 0.06, Min_Credit_Score__c = 680)
-};
-insert testProducts;
-
-System.debug('=== STEP 2: TESTING SERVICE LAYER ===');
-ProductRateNormalizationService.normalizeProductRates();
-
-System.debug('=== STEP 3: RESETTING FOR BATCH TEST ===');
-List<Product__c> productsToReset = [SELECT Id, Name FROM Product__c];
-for(Product__c p : productsToReset) {
-    if(p.Name == 'Too Low Rate') p.Base_Rate__c = 0.001;
-    else if(p.Name == 'Way Too Low') p.Base_Rate__c = 0.0001;
-    else if(p.Name == 'Too High Rate') p.Base_Rate__c = 0.18;
-    else if(p.Name == 'Way Too High') p.Base_Rate__c = 0.25;
-    else if(p.Name == 'Just Right Low') p.Base_Rate__c = 0.005;
-    else if(p.Name == 'Just Right High') p.Base_Rate__c = 0.15;
-    else if(p.Name == 'Normal Rate') p.Base_Rate__c = 0.06;
-}
-update productsToReset;
-
-System.debug('=== STEP 4: EXECUTING BATCH JOB ===');
-ProductRateNormalizationBatch batch = new ProductRateNormalizationBatch();
-Id batchId = Database.executeBatch(batch, 200);
-System.debug('Batch Job ID: ' + batchId);
-System.debug('Run verification script (#6) after batch completes');
 ```
 
 ### Expected Results
