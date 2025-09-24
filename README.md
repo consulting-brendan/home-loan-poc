@@ -47,8 +47,8 @@ sf apex test run \
 - **Data Model**: Mostly followed guidelines standard Contact instead of Borrower, Loan_Application__c and Product__c and Broker is assumed user. In real solution if possible I would have used Web-to-Lead, Lead (Draft)->Opportunity (Submitted, Approved, Rejected), Contacts for borrower and broker and Product2
 - **Validation Strategy**: Will need more time to work out if I have validated based on FFLib best practice 
 - **Task Assignment**: Created tasks for "broker" role generically, with more time would have created Custom Metadata setup for various tasks assigned to various teams
-- **FFLib implementation** Not entirely sure I have this done correctly, domain implements FFLib, service doesn't attempted to implement classes as per https://fflib.dev/docs/service-layer/example and got compile and version errors. (might have an older version of FFLib)
-- **Testing**: Some tests coverage are quite low, I would have worked on expanding this given time. Only included FFLib mocks in LoanApplicationServiceTest, will need to update the other classes
+- **FFLib implementation** Not entirely sure I have this done correctly, domain implements FFLib, service doesn't attempted to implement classes, IContactsSelector as per https://fflib.dev/docs/service-layer/example and got compile and version errors. (might have an older version of FFLib)
+- **Testing**: Some tests coverage are quite low, I would have worked on expanding this given time. Wasn't able to get mocks working due to version and compile errors. Will do more learning on this. 
 - **Trigger Logic**: Usually I would have a handler as well to contain the run logic, not entirely sure how this works with FFLib yet 
 
 ## Story B: Product Rate Normalization
