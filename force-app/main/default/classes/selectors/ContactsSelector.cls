@@ -1,4 +1,5 @@
-public with sharing class ContactsSelector extends fflib_SObjectSelector {
+public inherited sharing class ContactsSelector extends fflib_SObjectSelector {
+    
     public Schema.SObjectType getSObjectType() { 
         return Contact.SObjectType; 
     }
@@ -15,8 +16,12 @@ public with sharing class ContactsSelector extends fflib_SObjectSelector {
 
     public Map<Id, Contact> selectByIds(Set<Id> contactIds) {
         if (contactIds == null || contactIds.isEmpty()) return new Map<Id, Contact>();
+
         return new Map<Id, Contact>((List<Contact>) Database.query(
-            newQueryFactory().setCondition('Id IN :contactIds').toSOQL()
+            newQueryFactory()
+                .assertIsAccessible()
+                .setEnforceFLS(true)
+                .setCondition('Id IN :contactIds').toSOQL()
         ));
     }
 }
